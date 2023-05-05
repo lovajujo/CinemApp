@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "57560200789",
+    "project_id": "cinemapp-37159",
+    "storage_bucket": "cinemapp-37159.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57560200789:android:75ce301b424d5fd578c6dc",
+        "android_client_info": {
+          "package_name": "hu.lova.cinemapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57560200789-esrurkvpre6v68tqvm4714cf8cupgv7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hu.lova.cinemapp",
+            "certificate_hash": "c12e4b885de50d14cb9211c0b73af2ea074b5f7e"
+          }
+        },
+        {
+          "client_id": "57560200789-cua3cf876pag7uubkv7596qee82hj28k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7KilZ1_-kOxMdlk1m7i2Eeu5ZVCBUPXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57560200789-cua3cf876pag7uubkv7596qee82hj28k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
