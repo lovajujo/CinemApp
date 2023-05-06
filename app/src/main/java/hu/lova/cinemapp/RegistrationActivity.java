@@ -19,7 +19,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
     private static final String LOG_TAG=RegistrationActivity.class.getName();
     private static final String PREFERENCE_KEY=RegistrationActivity.class.getPackage().toString();
-    private static final int SECRET_KEY = 42;
+    private static final int SECRET_KEY = 99;
     EditText usernameEditText;
     EditText emailEditText;
     EditText passwordEditText;

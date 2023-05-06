@@ -24,26 +24,32 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private static final String LOG_TAG=MainActivity.class.getName();
     private static final String PREFERENCE_KEY =MainActivity.class.getPackage().toString();
-    private static final int SIGN_IN = 23;
+    private static final int SIGN_IN = 123;
+    private static final int SECRET_KEY = 99;
     EditText emailEditText;
     EditText passwordEditText;
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
-    private static final int SECRET_KEY = 42;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //permission
+        emailEditText =findViewById(R.id.emailEditText);
+        passwordEditText =findViewById(R.id.passwordEditText);
+        preferences=getSharedPreferences(PREFERENCE_KEY,MODE_PRIVATE);
+        firebaseAuth=FirebaseAuth.getInstance();
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
@@ -55,21 +61,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
-        emailEditText =findViewById(R.id.emailEditText);
-        passwordEditText =findViewById(R.id.passwordEditText);
-        //Sharedpreferences
-        preferences=getSharedPreferences(PREFERENCE_KEY,MODE_PRIVATE);
-        //Firebase inicializálás
-        firebaseAuth=FirebaseAuth.getInstance();
-        //Google-ös bejelentkezés
+
         GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        //googleSignInClient= GoogleSignIn.getClient(this,gso);
-        //Lifecycle
+        googleSignInClient= GoogleSignIn.getClient(this,gso);
         Log.i(LOG_TAG, "onCreate");
-        //RandomAsyncLoader
         getSupportLoaderManager().restartLoader(0,null,this);
 
     }
@@ -104,9 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void login(View view) {
         String email= emailEditText.getText().toString();
         String password= passwordEditText.getText().toString();
-        Log.i(LOG_TAG, "Sikeresen bejelentkezett: "+email+", jelszó: "+password);
 
-        //felhasználó beléptetése
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, task -> {
             if(task.isSuccessful()){
                 Log.d(LOG_TAG, "A felhasználó sikeresen bejelentkezett");
@@ -125,14 +121,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void loginAsGuest(View view) {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this, task -> {
-            if(task.isSuccessful()){
-                Log.d(LOG_TAG, "Anonim felhasználó sikeresen bejelentkezett");
-                startShopping();
-            }else{
-                Log.d(LOG_TAG, "Hiba az anonim bejelentkezés során");
-                Toast.makeText(MainActivity.this,"Hiba a bejelentkezés során"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                if(task.isSuccessful()){
+                    Log.d(LOG_TAG, "Anonim felhasználó sikeresen bejelentkezett");
+                    startShopping();
+                }else{
+                    Log.d(LOG_TAG, "Hiba az anonim bejelentkezés során");
+                    Toast.makeText(MainActivity.this,"Hiba a bejelentkezés során"+task.getException().getMessage(),Toast.LENGTH_LONG).show();
 
-            }
+                }
         });
     }
     public void loginWithGoogle(View view) {
@@ -141,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void registration(View view) {
-        //RegistrationActivity megnyitásához Intent
         Intent intent=new Intent(this,RegistrationActivity.class);
         intent.putExtra("SECRET_KEY",SECRET_KEY);
         startActivity(intent);
@@ -190,13 +185,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
-        //akkor lesz meghívva, mikor a loaderünk példáníosítva lesz
         return new RandomAsyncLoader(this);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
-        //akkor lesz meghívva, mikor a task befejeződik
         Button button=findViewById(R.id.guestLoginButton);
         button.setText(data);
 

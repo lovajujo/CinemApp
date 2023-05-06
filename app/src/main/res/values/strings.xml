@@ -21,6 +21,8 @@
     <string name="settings">Beállítások</string>
     <string name="logout">Kijelentkezés</string>
     <string name="view">Nézet</string>
+    <string name="login_google">Bejelentkezés Google fiókkal</string>
+    <string name="loginasguest">Bejelentkezés vendéggként</string>
 
     <string-array name="movie_item_types">
         <item>Diák/Nyugdíjas: 2D</item>
@@ -41,7 +43,10 @@
         <item>5</item>
     </array>
     <array name="movie_item_images">
-
+        <item>@drawable/gotg3</item>
+        <item>@drawable/nemzetaranyai</item>
+        <item>@drawable/fastfurious10</item>
+        <item>@drawable/sorscsapas</item>
     </array>
     <array name="ticket_item_prices">
         <item>1500 Ft</item>
