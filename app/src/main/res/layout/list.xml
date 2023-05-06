@@ -8,35 +8,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/itemImage"
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
             />
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/itemImage"
+            android:layout_below="@+id/image"
             android:padding="8dp"
             android:text="@string/item_name"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/purple_500"/>
         <TextView
-            android:id="@+id/itemType"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/title"
             android:padding="8dp"
             android:text="@string/item_type"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+/>
 
         <RatingBar
             android:id="@+id/rating"
             style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/itemType"
+            android:layout_below="@+id/date"
             android:layout_centerHorizontal="true"
             android:isIndicator="true"
             android:numStars="5"

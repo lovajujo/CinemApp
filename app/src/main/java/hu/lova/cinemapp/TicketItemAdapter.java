@@ -29,7 +29,7 @@ public class TicketItemAdapter extends RecyclerView.Adapter<TicketItemAdapter.Vi
     public TicketItemAdapter(Context context,ArrayList<TicketItem> ticketItemsData) {
         this.ticketItemsData = ticketItemsData;
         this.context = context;
-        this.ticketItemsAll=ticketItemsData;
+        this.ticketItemsAll = ticketItemsData;
     }
 
     @NonNull
@@ -40,7 +40,7 @@ public class TicketItemAdapter extends RecyclerView.Adapter<TicketItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull TicketItemAdapter.ViewHolder holder, int position){
-        TicketItem currentItem=ticketItemsData.get(position);
+        TicketItem currentItem= ticketItemsData.get(position);
         holder.bindTo(currentItem);
         if(holder.getAbsoluteAdapterPosition()>lastPostion){
             Animation animation= AnimationUtils.loadAnimation(context, R.anim.slidein);
@@ -67,12 +67,12 @@ public class TicketItemAdapter extends RecyclerView.Adapter<TicketItemAdapter.Vi
             FilterResults results=new FilterResults();
             //nem írtunk be semmit vagy nem akarunk semmire szűrni
             if(charSequence==null || charSequence.length()==0){
-                results.count=ticketItemsAll.size();
-                results.values=ticketItemsAll;
+                results.count= ticketItemsAll.size();
+                results.values= ticketItemsAll;
             }else{
                 String filterPattern=charSequence.toString().toLowerCase().trim();
-                for(TicketItem item:ticketItemsAll){
-                    if(item.getName().toLowerCase().contains(filterPattern)){
+                for(TicketItem item: ticketItemsAll){
+                    if(item.getTitle().toLowerCase().contains(filterPattern)){
                         filteredList.add(item);
                     }
                 }
@@ -85,7 +85,7 @@ public class TicketItemAdapter extends RecyclerView.Adapter<TicketItemAdapter.Vi
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             //a szűrés eredménye hogyan kerüljön visszaadásra
-            ticketItemsData=(ArrayList)filterResults.values;
+            ticketItemsData =(ArrayList)filterResults.values;
             //recyclerview értesítése, ha adatmódosítás történt
             notifyDataSetChanged();
 
@@ -94,24 +94,24 @@ public class TicketItemAdapter extends RecyclerView.Adapter<TicketItemAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView nameText;
-        private TextView typeText;
+        private TextView dateText;
         private TextView priceText;
         private ImageView itemImage;
         private RatingBar ratingBar;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            nameText=itemView.findViewById(R.id.name);
-            typeText=itemView.findViewById(R.id.itemType);
+            nameText=itemView.findViewById(R.id.title);
+            dateText=itemView.findViewById(R.id.date);
             priceText=itemView.findViewById(R.id.price);
-            itemImage=itemView.findViewById(R.id.itemImage);
+            itemImage=itemView.findViewById(R.id.image);
             ratingBar=itemView.findViewById(R.id.rating);
 
         }
 
         public void bindTo(TicketItem currentItem) {
-            nameText.setText(currentItem.getName());
-            typeText.setText(currentItem.getItemType());
+            nameText.setText(currentItem.getTitle());
+            dateText.setText(currentItem.getDate());
             priceText.setText(currentItem.getPrice());
             ratingBar.setRating(currentItem.getRating());
 

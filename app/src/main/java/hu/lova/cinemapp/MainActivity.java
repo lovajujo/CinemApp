@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        emailEditText =findViewById(R.id.emailEditText);
-        passwordEditText =findViewById(R.id.passwordEditText);
-        preferences=getSharedPreferences(PREFERENCE_KEY,MODE_PRIVATE);
         firebaseAuth=FirebaseAuth.getInstance();
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -62,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         }
 
+        emailEditText =findViewById(R.id.emailEditText);
+        passwordEditText =findViewById(R.id.passwordEditText);
+        preferences=getSharedPreferences(PREFERENCE_KEY,MODE_PRIVATE);
         GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()

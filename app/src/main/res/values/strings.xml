@@ -24,42 +24,55 @@
     <string name="login_google">Bejelentkezés Google fiókkal</string>
     <string name="loginasguest">Bejelentkezés vendéggként</string>
 
-    <string-array name="movie_item_types">
-        <item>Diák/Nyugdíjas: 2D</item>
-        <item>Normál: 2D</item>
-        <item>Diák/Nyugdíjas: 3D</item>
-        <item>Normál: 3D</item>
+    <string-array name="movie_date">
+        <item>"2023.05.05 15.00"</item>
+        <item>"2023.05.05 19.00"</item>
+        <item>"2023.05.06 15.00"</item>
+        <item>"2023.05.06 19.00"</item>
+        <item>"2023.05.07 15.00"</item>
+        <item>"2023.05.07 19.00"</item>
+        <item>"2023.05.08 15.00"</item>
+        <item>"2023.05.08 19.00"</item>
+        <item>"2023.05.09 15.00"</item>
+        <item>"2023.05.09 19.00"</item>
     </string-array>
     <array name="movie_item_rates">
-        <item>3</item>
-        <item>1.5</item>
-        <item>2</item>
-        <item>4.5</item>
+        <item>4.8</item>
+        <item>4.1</item>
+        <item>3.6</item>
+        <item>3.4</item>
         <item>2.5</item>
-        <item>1</item>
-        <item>3</item>
-        <item>4.5</item>
-        <item>3.5</item>
+        <item>4.2</item>
         <item>5</item>
+        <item>4.8</item>
+        <item>3.9</item>
+        <item>4.6</item>
     </array>
     <array name="movie_item_images">
         <item>@drawable/gotg3</item>
-        <item>@drawable/nemzetaranyai</item>
         <item>@drawable/fastfurious10</item>
+        <item>@drawable/nemzetaranyai</item>
         <item>@drawable/sorscsapas</item>
+        <item>@drawable/pops</item>
+        <item>@drawable/sikoly</item>
+        <item>@drawable/pussinboots</item>
+        <item>@drawable/dungeons</item>
+        <item>@drawable/johnwick</item>
+        <item>@drawable/mario</item>
     </array>
-    <array name="ticket_item_prices">
-        <item>1500 Ft</item>
-        <item>2000 Ft</item>
-        <item>1800</item>
-        <item>2300</item>
-    </array>
+    <string name="price">1500 Ft</string>
 
     <string-array name="movie_titles">
         <item>A galaxis őrzői vol.3</item>
         <item>Halálos iramban 10.</item>
         <item>A nemzet aranyai</item>
         <item>Gyönyörű sorscsapás</item>
+        <item>A pápa ördögűzője</item>
+        <item>Sikoly 6.</item>
+        <item>Csizmás, a kandúr: utolsó kívánság</item>
+        <item>Dungeons and Dragons: Betyárbecsület</item>
+        <item>John Wick: 4. felvonás</item>
+        <item>Super Mario Bros: a film</item>
     </string-array>
 
 </resources>

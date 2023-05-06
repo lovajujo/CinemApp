@@ -33,7 +33,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firestore.bundle.BundleElement;
 
 import java.util.ArrayList;
 
@@ -68,7 +67,7 @@ public class TicketActivity extends AppCompatActivity {
         adapter=new TicketItemAdapter(this, itemList);
         recyclerView.setAdapter(adapter);
         firestore=FirebaseFirestore.getInstance();
-        itemCollectionRef=firestore.collection("Items");
+        itemCollectionRef=firestore.collection("Movies");
         queryData();
         IntentFilter filter=new IntentFilter();
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -95,7 +94,7 @@ public class TicketActivity extends AppCompatActivity {
     private void queryData(){
         itemList.clear();
         //rendezzük a termékeket az alapján, melyiket tettük be legtöbbször a kosárba
-        itemCollectionRef.orderBy("cartCounter", Query.Direction.DESCENDING).limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
+        itemCollectionRef.orderBy("date", Query.Direction.DESCENDING).limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(QueryDocumentSnapshot document: queryDocumentSnapshots){
                 TicketItem item=document.toObject(TicketItem.class);
                 item.setId(document.getId());
@@ -111,28 +110,28 @@ public class TicketActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        String[]itemsList=getResources().getStringArray(R.array.movie_titles);
-        String[]itemType=getResources().getStringArray(R.array.movie_item_types);
-        String[]itemsPrice=getResources().getStringArray(R.array.ticket_item_prices);
-        TypedArray itemsImageResource=getResources().obtainTypedArray(R.array.movie_item_images);
-        TypedArray itemsRate=getResources().obtainTypedArray(R.array.movie_item_rates);
-        for (int i = 0; i < itemsList.length; i++) {
+        String[]movieList=getResources().getStringArray(R.array.movie_titles);
+        TypedArray movieImageResource=getResources().obtainTypedArray(R.array.movie_item_images);
+        TypedArray movieRate=getResources().obtainTypedArray(R.array.movie_item_rates);
+        String moviePrice=getResources().getString(R.string.price);
+        String[] movieDates=getResources().getStringArray(R.array.movie_date);
+        for (int i = 0; i < movieList.length; i++) {
             itemCollectionRef.add(new TicketItem(
-                    itemsList[i],
-                    itemType[i],
-                    itemsPrice[i],
-                    itemsRate.getFloat(i, 0),
-                    itemsImageResource.getResourceId(i, 0),
+                    movieList[i],
+                    movieRate.getFloat(i,0),
+                    movieImageResource.getResourceId(i,0),
+                    moviePrice,
+                    movieDates[i],
                     0));
         }
-        itemsImageResource.recycle();
+        movieImageResource.recycle();
     }
     public void deleteItem(TicketItem item){
-        DocumentReference ref=itemCollectionRef.document(item._getId());
+        DocumentReference ref=itemCollectionRef.document(item.getId());
         ref.delete().addOnSuccessListener(success->{
-            Log.d(LOG_TAG, "Az elem sikeresen ki lett törölve"+item._getId());
+            Log.d(LOG_TAG, "Az elem sikeresen ki lett törölve"+item.getId());
         }).addOnFailureListener(fail->{
-            Toast.makeText(this,"A "+item._getId()+" elemet nem lehet kitörölni!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"A "+item.getId()+" elemet nem lehet kitörölni!",Toast.LENGTH_LONG).show();
         });
         queryData();
         notificationHelper.cancel();//ha kitörölt termékhez van értesítés, akkor kilövi
@@ -152,7 +151,6 @@ public class TicketActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                //szöveg változik
                 Log.d(LOG_TAG,s);
                 adapter.getFilter().filter(s);
                 return false;
@@ -217,10 +215,10 @@ public class TicketActivity extends AppCompatActivity {
             contentTextView.setText("");
         }
         redDot.setVisibility((cartItems>0) ? VISIBLE:GONE);
-        itemCollectionRef.document(item._getId()).update("cartCounter",item.getCartCounter()+1).addOnFailureListener(fail->{
-            Toast.makeText(this,"A "+item._getId()+" elemet nem lehet megváltoztatni!",Toast.LENGTH_LONG).show();
+        itemCollectionRef.document(item.getId()).update("cartCounter",item.getCartCounter()+1).addOnFailureListener(fail->{
+            Toast.makeText(this,"A "+item.getId()+" elemet nem lehet megváltoztatni!",Toast.LENGTH_LONG).show();
         });
-        notificationHelper.send(item.getName());
+        notificationHelper.send(item.getTitle());
         queryData();
     }
 

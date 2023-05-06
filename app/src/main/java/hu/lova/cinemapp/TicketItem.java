@@ -1,43 +1,54 @@
 package hu.lova.cinemapp;
 
+import java.util.Date;
+
 public class TicketItem {
     private String id;
-    private String name;
-    private String itemType;
-    private String price;
+    private String title;
     private float rating;
     private int imageRes;
+    private String price;
+    private String date;
     private int cartCounter;
 
     public TicketItem(){}
 
-    public TicketItem(String name, String itemType, String price, float rating, int imageRes, int cartCounter) {
-        this.name = name;
-        this.itemType = itemType;
-        this.price = price;
+    public TicketItem(String title, float rating, int imageRes, String price, String date, int cartCounter) {
+
+        this.title = title;
         this.rating = rating;
         this.imageRes = imageRes;
+        this.price=price;
+        this.date=date;
+        this.cartCounter=cartCounter;
+    }
+
+    public int getCartCounter() {
+        return cartCounter;
+    }
+
+    public void setCartCounter(int cartCounter) {
         this.cartCounter = cartCounter;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public String _getId() {
+    public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getItemType() {
-        return itemType;
-    }
-
-    public String getPrice() {
-        return price;
+    public String getTitle() {
+        return title;
     }
 
     public float getRating() {
@@ -46,9 +57,5 @@ public class TicketItem {
 
     public int getImageRes() {
         return imageRes;
-    }
-
-    public int getCartCounter() {
-        return cartCounter;
     }
 }

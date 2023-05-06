@@ -37,16 +37,15 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         int secretKey=getIntent().getIntExtra("SECRET_KEY", 0);
         if(secretKey!=SECRET_KEY) finish();
 
+        preferences=getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
+        String email=preferences.getString("email", "");
+        emailEditText.setText(email);
+
         usernameEditText=findViewById(R.id.usernameEditText);
         emailEditText=findViewById(R.id.emailEditText);
         passwordEditText=findViewById(R.id.passwordEditText);
         passwordAgainEditText=findViewById(R.id.passwordAgainEditText);
         phoneEditText=findViewById(R.id.phoneEditText);
-
-        preferences=getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
-        String email=preferences.getString("email", "");
-        emailEditText.setText(email);
-
         Log.i(LOG_TAG,"onCreate");
     }
 
