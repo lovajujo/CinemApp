@@ -22,7 +22,7 @@
     <string name="logout">Kijelentkezés</string>
     <string name="view">Nézet</string>
     <string name="login_google">Bejelentkezés Google fiókkal</string>
-    <string name="loginasguest">Bejelentkezés vendéggként</string>
+    <string name="loginasguest">Bejelentkezés vendéggként (10mp után)</string>
     <string name="seat">Helyfoglalás érkezési sorrendben!</string>
 
     <string-array name="movie_date">
