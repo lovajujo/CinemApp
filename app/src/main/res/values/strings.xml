@@ -23,6 +23,7 @@
     <string name="view">Nézet</string>
     <string name="login_google">Bejelentkezés Google fiókkal</string>
     <string name="loginasguest">Bejelentkezés vendéggként</string>
+    <string name="seat">Helyfoglalás érkezési sorrendben!</string>
 
     <string-array name="movie_date">
         <item>"2023.05.05 15.00"</item>

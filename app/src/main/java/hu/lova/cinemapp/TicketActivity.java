@@ -49,8 +49,8 @@ public class TicketActivity extends AppCompatActivity {
     private TextView contentTextView;
     private int gridNumber=1;
     private boolean viewRow=true;
-    private  int cartItems=0;
     private int queryLimit=10;
+    private ArrayList<String> cart=new ArrayList<>();
     private NotificationHelper notificationHelper;
 
 
@@ -129,12 +129,17 @@ public class TicketActivity extends AppCompatActivity {
     public void deleteItem(TicketItem item){
         DocumentReference ref=itemCollectionRef.document(item.getId());
         ref.delete().addOnSuccessListener(success->{
+            for(String str:cart){
+                if(str.equals(item.getId())){
+                    decreaseAlerIcon(item);
+                }
+            }
             Log.d(LOG_TAG, "Az elem sikeresen ki lett törölve"+item.getId());
         }).addOnFailureListener(fail->{
             Toast.makeText(this,"A "+item.getId()+" elemet nem lehet kitörölni!",Toast.LENGTH_LONG).show();
         });
         queryData();
-        notificationHelper.cancel();//ha kitörölt termékhez van értesítés, akkor kilövi
+        notificationHelper.cancel();
     }
 
     @Override
@@ -196,25 +201,34 @@ public class TicketActivity extends AppCompatActivity {
         redDot = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
         contentTextView = (TextView) rootView.findViewById(R.id.view_alert_count_textview);
 
-        //rootview-ra való klikkelés
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //ha valaki rákattint, meghívódik az onOptionsItemSelected-ben a megfelelő case opció
                 onOptionsItemSelected(alertMenuItem);
             }
         });
 
         return super.onPrepareOptionsMenu(menu);
     }
-    public void updateAlertIcon(TicketItem item){
-        cartItems=(cartItems+1);
-        if(0<cartItems){
-            contentTextView.setText(String.valueOf(cartItems));
+
+    public void decreaseAlerIcon(TicketItem item){
+        cart.remove(item.getId());
+        if(0<cart.size()){
+            contentTextView.setText(String.valueOf(cart.size()));
         }else{
             contentTextView.setText("");
         }
-        redDot.setVisibility((cartItems>0) ? VISIBLE:GONE);
+        redDot.setVisibility((cart.size()>0) ? VISIBLE:GONE);
+
+    }
+    public void updateAlertIcon(TicketItem item){
+        cart.add(item.getId());
+        if(0<cart.size()){
+            contentTextView.setText(String.valueOf(cart.size()));
+        }else{
+            contentTextView.setText("");
+        }
+        redDot.setVisibility((cart.size()>0) ? VISIBLE:GONE);
         itemCollectionRef.document(item.getId()).update("cartCounter",item.getCartCounter()+1).addOnFailureListener(fail->{
             Toast.makeText(this,"A "+item.getId()+" elemet nem lehet megváltoztatni!",Toast.LENGTH_LONG).show();
         });
@@ -222,7 +236,6 @@ public class TicketActivity extends AppCompatActivity {
         queryData();
     }
 
-    //vége van az Activitynek, akkor leregisztrálom a receivert
     @Override
     protected void onDestroy() {
         super.onDestroy();
