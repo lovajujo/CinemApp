@@ -51,7 +51,7 @@
     </array>
     <array name="movie_item_images">
         <item>@drawable/gotg3</item>
-        <item>@drawable/fastfurious10</item>
+        <item>@drawable/fast</item>
         <item>@drawable/nemzetaranyai</item>
         <item>@drawable/sorscsapas</item>
         <item>@drawable/pops</item>
